@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modern Math CAPTCHA</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 35px;
+        width: 360px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        text-align: center;
+        color: white;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    h2 {
+        margin-bottom: 15px;
+    }
+
+    .captcha-box {
+        font-size: 26px;
+        font-weight: bold;
+        background: rgba(255,255,255,0.25);
+        padding: 12px;
+        border-radius: 8px;
+        letter-spacing: 2px;
+        margin: 15px 0;
+    }
+
+    input {
+        width: 90%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        margin: 10px 0;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    input:focus {
+        outline: none;
+        box-shadow: 0 0 8px #fff;
+    }
+
+    .btn-group {
+        margin-top: 10px;
+    }
+
+    button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 5px;
+        transition: 0.3s;
+    }
+
+    .submit {
+        background: #00c851;
+        color: white;
+    }
+
+    .submit:hover {
+        background: #007e33;
+    }
+
+    .refresh {
+        background: #ffbb33;
+        color: black;
+    }
+
+    .refresh:hover {
+        background: #ff8800;
+    }
+
+    #message {
+        margin-top: 12px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🔐 Math CAPTCHA</h2>
+
+    <div class="captcha-box" id="mathCaptcha"></div>
+
+    <input type="number" id="captchaInput" placeholder="Enter Answer">
+
+    <div class="btn-group">
+        <button class="submit" onclick="validateCaptcha()">Verify</button>
+        <button class="refresh" onclick="generateCaptcha()">Refresh</button>
+    </div>
+
+    <p id="message"></p>
+</div>
+
+<script>
+    let correctAnswer;
+
+    function generateCaptcha() {
+        let num1 = Math.floor(Math.random() * 10) + 1;
+        let num2 = Math.floor(Math.random() * 10) + 1;
+        let operators = ['+', '-', '*'];
+        let operator = operators[Math.floor(Math.random() * operators.length)];
+
+        correctAnswer = operator === '+'
+            ? num1 + num2
+            : operator === '-'
+            ? num1 - num2
+            : num1 * num2;
+
+        document.getElementById("mathCaptcha").innerText =
+            num1 + " " + operator + " " + num2 + " = ?";
+        
+        document.getElementById("captchaInput").value = "";
+        document.getElementById("message").innerText = "";
+    }
+
+    function validateCaptcha() {
+        let userAnswer = parseInt(document.getElementById("captchaInput").value);
+        let message = document.getElementById("message");
+
+        if (userAnswer === correctAnswer) {
+            message.innerText = "✅ Verified Successfully!";
+            message.style.color = "#00ffcc";
+            setTimeout(generateCaptcha, 2000);
+        } else {
+            message.innerText = "❌ Wrong Answer! Try Again.";
+            message.style.color = "#ff4444";
+        }
+    }
+
+    window.onload = generateCaptcha;
+</script>
+
+</body>
+</html>
