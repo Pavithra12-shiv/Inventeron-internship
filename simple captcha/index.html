@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Captcha Form</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="form-container">
+    <h2>✨ Secure Registration</h2>
+
+    <form id="dynamicForm">
+        <div class="input-group">
+            <label>First Name</label>
+            <input type="text" required>
+        </div>
+
+        <div class="input-group">
+            <label>Last Name</label>
+            <input type="text" required>
+        </div>
+
+        <div id="step2" class="hidden">
+            <label>Verification</label>
+            <div id="captcha-area"></div>
+
+            <button type="button" id="refreshBtn">🔄 Refresh Captcha</button>
+
+            <div class="input-group">
+                <input type="text" id="captchaInput" placeholder="Enter Captcha">
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+        <div class="message" id="message"></div>
+    </form>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
